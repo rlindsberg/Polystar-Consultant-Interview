@@ -16,7 +16,7 @@ class TestController(unittest.TestCase):
         """
         def send_to_server():
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.settimeout(0.0001)
+                s.settimeout(1)
                 s.connect(('127.0.0.1', 50001))
 
                 client = Controller(s)
