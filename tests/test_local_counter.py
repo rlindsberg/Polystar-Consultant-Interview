@@ -11,9 +11,9 @@ class TestLocalCounter(unittest.TestCase):
         Then output matches the manually counted result.
         """
         text = 'A very very simple text.'
-        base_counter = BaseCounter()
+        base_counter = BaseCounter(text)
 
-        word_frequency_dict = base_counter.count_word_frequencies(text)
+        word_frequency_dict = base_counter.count_word_frequencies()
 
         self.assertEqual(word_frequency_dict['a'], 1)
         self.assertEqual(word_frequency_dict['very'], 2)
