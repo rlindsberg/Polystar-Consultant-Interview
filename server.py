@@ -2,9 +2,10 @@ import json
 import socket
 from collections import Counter
 import re
+from typing import Dict
 
 
-def count_word_frequencies(text):
+def count_word_frequencies(text: str) -> Dict:
     words = re.findall(r'\w+', text.lower())
     fre_list = Counter(words)
     return dict(fre_list)
@@ -49,19 +50,22 @@ def start():
                 res = client_socket.recv(1024)
                 print(f'3. I got {res}')
 
-                assert res == header
+                if res != header:
+                    raise Exception('Sent message was corrupted.')
+                else:
+                    # continues
+                    # 4. server sends json dump - send_json_dump()
+                    payload = bytes(data, encoding="utf-8")
+                    client_socket.sendall(payload)
 
-                # 4. server sends json dump - send_json_dump()
-                payload = bytes(data, encoding="utf-8")
-                client_socket.sendall(payload)
+                    # 6. server checks res == json dump
+                    res = client_socket.recv(payload_size)
 
-                # 6. server checks res == json dump
-                res = client_socket.recv(payload_size)
+                    if res != payload:
+                        raise Exception('Sent message was corrupted.')
 
-                assert res == payload
-
-                # the very end, wait for next packet
-                data_received = client_socket.recv(1024)
+                    # the very end, wait for next packet
+                    data_received = client_socket.recv(1024)
 
 
 if __name__ == '__main__':
