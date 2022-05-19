@@ -16,7 +16,7 @@ class BaseCounter:
         fre_counter = Counter(words)
         return dict(fre_counter)
 
-    def count_word_frequencies_in_directory(self):
+    def count_word_frequencies_in_directory(self, top_k=None):
         mypath = self.data_path
 
         files = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
@@ -26,7 +26,6 @@ class BaseCounter:
             with open(file_path) as f:
                 for line in f:
                     words = re.findall(r'\w+', line.lower())
-                    # fre_list = Counter(words).most_common(3)
                     fre_list = Counter(words)
                     data = dict(fre_list)
 
@@ -36,4 +35,8 @@ class BaseCounter:
                         except KeyError:
                             final_word_f[key] = val
 
-        return dict(final_word_f)
+        if top_k is not None:
+            top_k_counter = Counter(final_word_f).most_common(top_k)
+            final_word_f = dict(top_k_counter)
+
+        return final_word_f
