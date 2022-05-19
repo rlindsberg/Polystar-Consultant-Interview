@@ -38,10 +38,10 @@ class TestLocalCounter(unittest.TestCase):
         Then output matches the manually counted result.
         """
         # setup
-        data_path = '../data/test_count_multiple_files'
-        Path("./results").mkdir(parents=True, exist_ok=True)
+        data_path = '/Users/karlemstrand/Documents/git/HiQ/data/test_count_multiple_files'
+        Path(data_path).mkdir(parents=True, exist_ok=True)
 
-        base_counter = BaseCounter(data_path)
+        base_counter = BaseCounter(data_path=data_path)
 
         with open(f'{data_path}/single_line.txt', "w") as text_file:
             text_file.write('A very very simple text.')
