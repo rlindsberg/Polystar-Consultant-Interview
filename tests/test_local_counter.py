@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 
 from models.base_counter import BaseCounter
+from server import count_word_frequencies
 
 
 class TestLocalCounter(unittest.TestCase):
@@ -12,9 +13,8 @@ class TestLocalCounter(unittest.TestCase):
         Then output matches the manually counted result.
         """
         text = 'A very very simple text.'
-        base_counter = BaseCounter(text)
 
-        word_frequency_dict = base_counter.count_word_frequencies()
+        word_frequency_dict = count_word_frequencies(text)
 
         self.assertEqual(word_frequency_dict['a'], 1)
         self.assertEqual(word_frequency_dict['very'], 2)
