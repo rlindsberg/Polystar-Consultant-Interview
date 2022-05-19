@@ -59,6 +59,8 @@ class Controller:
             # continue
             self._send_payload(msg)
 
+            return ok, res
+
     def receive_dict(self):
         header = self.conn.recv(1024)
         self.conn.sendall(header)
