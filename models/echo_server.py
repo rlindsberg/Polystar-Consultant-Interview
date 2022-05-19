@@ -1,12 +1,13 @@
 # echo-server.py
-# This code is copied from https://realpython.com/python-sockets/#echo-server
+# This code is inspired by https://realpython.com/python-sockets/#echo-server
 import socket
 
+from models.base_server import BaseServer
 
-class EchoServer:
+
+class EchoBaseServer(BaseServer):
     def __init__(self, server_ip, server_port):
-        self.server_ip = server_ip
-        self.server_port = server_port
+        super().__init__(server_ip, server_port)
 
     def start(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
