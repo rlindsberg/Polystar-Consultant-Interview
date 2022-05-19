@@ -62,3 +62,16 @@ class TestLocalCounter(unittest.TestCase):
         # edge cases
         with self.assertRaises(KeyError):
             self.assertEqual(word_frequency_dict['texta'], 2)
+
+    def test_count_word_in_two_novels(self):
+        data_path = '/Users/karlemstrand/Documents/git/HiQ/data/novels'
+        base_counter = BaseCounter(data_path=data_path)
+
+        word_frequency_dict = base_counter.count_word_frequencies_in_directory(top_k=5)
+
+        self.assertIsNotNone(word_frequency_dict)
+        self.assertEqual(len(word_frequency_dict), 5)
+
+        for _, val in word_frequency_dict.items():
+            # top 5 words has at least one occurrence each
+            self.assertGreater(val, 0)
