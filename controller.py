@@ -1,3 +1,4 @@
+import json
 import socket
 
 from models.message import Message
@@ -45,3 +46,28 @@ class Controller:
                 raise Exception('Send message payload failed.')
             else:
                 return ok, res
+
+    def send_dict(self, json_dict):
+        data = json.dumps(json_dict)
+        msg = Message(data, self)
+
+        ok, res = self.send_header(msg.header)
+
+        if not ok:
+            raise Exception('Send header failed.')
+        else:
+            # continue
+            self._send_payload(msg)
+
+    def receive_dict(self):
+        header = self.conn.recv(1024)
+        self.conn.sendall(header)
+        payload_size = int(header.decode('utf-8'))
+
+        # 5. client stores json dump, sends res - sendall()
+        data = self.conn.recv(payload_size)
+        self.conn.sendall(data)
+
+        json_dict = json.loads(data)
+
+        return json_dict
