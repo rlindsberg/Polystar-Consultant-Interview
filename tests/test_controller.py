@@ -55,3 +55,23 @@ class TestController(unittest.TestCase):
             self.assertIsNotNone(res)
             self.assertEqual(res, text)
             print(res)
+
+    def test_send_text_receive_dict(self):
+        """
+        Given path to a text file,
+        When send_text(), receive_dict(),
+        Then output matches the manually counted result.
+        """
+        file_path = '/Users/karlemstrand/Documents/git/HiQ/data/test_count_multiple_files/poly_line.txt'
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect(('star.karlemstrand.com', 50001))
+            client = Controller(s)
+
+            with open(file_path) as f:
+                for line in f:
+                    client.send_text(line)
+
+                    res = client.receive_dict()
+
+                    self.assertIsNotNone(res)
