@@ -69,6 +69,9 @@ class TestLocalCounter(unittest.TestCase):
 
         word_frequency_dict = base_counter.count_word_frequencies_in_directory(top_k=5)
 
+        # print(word_frequency_dict)
+        # [('the', 12483), ('and', 9018), ('i', 7692), ('to', 6919), ('of', 6517)]
+
         self.assertIsNotNone(word_frequency_dict)
         self.assertEqual(len(word_frequency_dict), 5)
 

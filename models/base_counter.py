@@ -16,12 +16,12 @@ class BaseCounter:
         fre_counter = Counter(words)
         return dict(fre_counter)
 
-    def count_word_frequencies_in_directory(self, top_k=None):
+    def count_word_frequencies_in_directory(self, top_k: int = None) -> Dict:
         mypath = self.data_path
 
         files = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 
-        final_word_f = {}
+        final_word_frequency_dict = {}
         for file_path in files:
             with open(file_path) as f:
                 for line in f:
@@ -31,12 +31,12 @@ class BaseCounter:
 
                     for key, val in data.items():
                         try:
-                            final_word_f[key] += val
+                            final_word_frequency_dict[key] += val
                         except KeyError:
-                            final_word_f[key] = val
+                            final_word_frequency_dict[key] = val
 
         if top_k is not None:
-            top_k_counter = Counter(final_word_f).most_common(top_k)
-            final_word_f = dict(top_k_counter)
+            top_k_counter = Counter(final_word_frequency_dict).most_common(top_k)
+            final_word_frequency_dict = dict(top_k_counter)
 
-        return final_word_f
+        return final_word_frequency_dict
