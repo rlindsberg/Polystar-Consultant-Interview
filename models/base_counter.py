@@ -5,16 +5,13 @@ from os.path import isfile, join
 
 from collections import Counter
 
+from server import count_word_frequencies
+
 
 class BaseCounter:
     def __init__(self, text: str = None, data_path: str = None):
         self.text = text
         self.data_path = data_path
-
-    def count_word_frequencies(self) -> Dict:
-        words = re.findall(r'\w+', self.text.lower())
-        fre_counter = Counter(words)
-        return dict(fre_counter)
 
     def count_word_frequencies_in_directory(self, top_k: int = None) -> Dict:
         mypath = self.data_path
