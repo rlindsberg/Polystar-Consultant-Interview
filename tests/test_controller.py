@@ -68,10 +68,21 @@ class TestController(unittest.TestCase):
             s.connect(('star.karlemstrand.com', 50001))
             client = Controller(s)
 
+            word_frequency_dict = {}
             with open(file_path) as f:
                 for line in f:
                     client.send_text(line)
 
                     res = client.receive_dict()
 
-                    self.assertIsNotNone(res)
+                    for key, val in res.items():
+                        try:
+                            word_frequency_dict[key] += val
+                        except KeyError:
+                            word_frequency_dict[key] = val
+
+            # testing
+            self.assertEqual(word_frequency_dict['a'], 3)
+            self.assertEqual(word_frequency_dict['very'], 6)
+            self.assertEqual(word_frequency_dict['simple'], 3)
+            self.assertEqual(word_frequency_dict['text'], 3)
