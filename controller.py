@@ -21,7 +21,7 @@ class Controller:
         else:
             return False, res
 
-    def send_payload(self, msg):
+    def _send_payload(self, msg):
         self.conn.sendall(msg.payload)
         res = self.conn.recv(msg.length).decode(msg.encoding)
 
@@ -39,7 +39,7 @@ class Controller:
             raise Exception('Send header failed.')
         else:
             # continue
-            ok, res = self.send_payload(msg)
+            ok, res = self._send_payload(msg)
 
             if not ok:
                 raise Exception('Send message payload failed.')
