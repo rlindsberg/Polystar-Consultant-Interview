@@ -55,6 +55,8 @@ def main():
 
     top_k_counter = Counter(final_word_frequency_dict).most_common(5)
     top_k_dict = dict(top_k_counter)
+    print(f'The 5 most common words in the two texts are: {top_k_dict}')
+
     return top_k_dict
 
 
