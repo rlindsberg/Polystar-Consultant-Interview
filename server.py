@@ -1,3 +1,4 @@
+import argparse
 import json
 import socket
 from collections import Counter
@@ -13,10 +14,10 @@ def count_word_frequencies(text: str) -> Dict:
     return dict(fre_list)
 
 
-def start():
+def start(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
-        s.bind(('127.0.0.1', 50000))
+        s.bind(('127.0.0.1', port))
         s.listen()
 
         while True:
@@ -47,4 +48,9 @@ def start():
 
 
 if __name__ == '__main__':
-    start()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--port', default=50000, type=int, help='The socket port')
+    args = parser.parse_args()
+
+    start(args.port)
