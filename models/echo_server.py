@@ -6,7 +6,7 @@ from models.base_server import BaseServer
 
 
 class EchoBaseServer(BaseServer):
-    def __init__(self, server_ip, server_port):
+    def __init__(self, server_ip: str, server_port: int):
         super().__init__(server_ip, server_port)
 
     def start(self):
