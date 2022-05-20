@@ -5,7 +5,7 @@ import client
 
 class TestController(unittest.TestCase):
     def test_final_results(self):
-        word_frequency_dict_top_5 = client.run()
+        word_frequency_dict_top_5 = client.main()
 
         ground_truth = {'the': 12483, 'and': 9018, 'i': 7692, 'to': 6919, 'of': 6517}
 

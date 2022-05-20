@@ -57,8 +57,9 @@ def main():
     for t in thread_list:
         t.join()
 
-        top_k_counter = Counter(final_word_frequency_dict).most_common(5)
-        print(dict(top_k_counter))
+    top_k_counter = Counter(final_word_frequency_dict).most_common(5)
+    top_k_dict = dict(top_k_counter)
+    return top_k_dict
 
 
 if __name__ == '__main__':
