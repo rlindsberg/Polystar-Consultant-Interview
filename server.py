@@ -27,7 +27,7 @@ def start(port):
             data_received = controller.conn.recv(1024)
             # while socket is open
             while data_received != b'':
-                # print(f'2. I got {data_received}')
+                print(f'2. I got {data_received}')
                 payload_size = int(data_received.decode('utf-8'))
 
                 controller.conn.sendall(data_received)
@@ -40,7 +40,9 @@ def start(port):
                 text = payload.decode('utf-8')
                 f_dict = count_word_frequencies(text)
 
-                controller.send_dict(f_dict)
+                ok, res = controller.send_dict(f_dict)
+                if not ok:
+                    return
 
                 # the very end, wait for next packet
                 data_received = controller.conn.recv(1024)
@@ -51,4 +53,5 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--port', default=50000, type=int, help='The socket port')
     args = parser.parse_args()
 
-    start(args.port)
+    while True:
+        start(args.port)

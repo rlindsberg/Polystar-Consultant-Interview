@@ -26,7 +26,7 @@ def count(host: str, port: int, file_path: str, lock: Lock):
             for line in tqdm(f):
                 client.send_text(line)
 
-                res = client.receive_dict()
+                ok, res = client.receive_dict()
 
                 with lock:
                     for key, val in res.items():
