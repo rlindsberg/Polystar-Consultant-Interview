@@ -16,7 +16,7 @@ def count_word_frequencies(text: str) -> Dict:
 def start():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
-        s.bind((socket.gethostname(), 50001))
+        s.bind(('127.0.0.1', 50000))
         s.listen()
 
         while True:
@@ -34,13 +34,11 @@ def start():
 
                 # 5. server stores payload, sends res - sendall()
                 payload = controller.conn.recv(payload_size)
-                print(f'5. I got {payload}')
                 controller.conn.sendall(payload)
 
                 # server computes word frequency
                 text = payload.decode('utf-8')
                 f_dict = count_word_frequencies(text)
-                print(f_dict)
 
                 controller.send_dict(f_dict)
 
