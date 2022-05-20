@@ -1,7 +1,8 @@
+from typing import Union
 
 
 class Message:
-    def __init__(self, text, controller):
+    def __init__(self, text: Union[bytes, str], controller):
         self.encoding = 'utf-8'
         self._text = text
         self._payload = self._text.encode(self.encoding)

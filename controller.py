@@ -1,14 +1,18 @@
 import json
 import socket
+from typing import Tuple, Dict
 
 from models.message import Message
 
 
 class Controller:
+    """
+    The logic of the counter program. Both client and server uses controller to send and receive messages.
+    """
     def __init__(self, socket_connection):
         self.conn = socket_connection
 
-    def send_header(self, header_to_send):
+    def _send_header(self, header_to_send: bytes) -> Tuple[bool, bytes]:
         try:
             self.conn.sendall(header_to_send)
             res = self.conn.recv(1024)
@@ -22,7 +26,7 @@ class Controller:
         else:
             return False, res
 
-    def _send_payload(self, msg):
+    def _send_payload(self, msg: Message) -> Tuple[bool, bytes]:
         self.conn.sendall(msg.payload)
         res = self.conn.recv(msg.length).decode(msg.encoding)
 
@@ -31,10 +35,10 @@ class Controller:
         else:
             return False, res
 
-    def send_text(self, text: str):
+    def send_text(self, text: str) -> Tuple[bool, bytes]:
         msg = Message(text, self)
 
-        ok, res = self.send_header(msg.header)
+        ok, res = self._send_header(msg.header)
 
         if not ok:
             raise Exception('Send header failed.')
@@ -47,11 +51,11 @@ class Controller:
             else:
                 return ok, res
 
-    def send_dict(self, json_dict):
+    def send_dict(self, json_dict: Dict) -> Tuple[bool, bytes]:
         data = json.dumps(json_dict)
         msg = Message(data, self)
 
-        ok, res = self.send_header(msg.header)
+        ok, res = self._send_header(msg.header)
 
         if not ok:
             raise Exception('Send header failed.')
@@ -61,12 +65,12 @@ class Controller:
 
             return ok, res
 
-    def receive_dict(self):
+    def receive_dict(self) -> Dict:
         header = self.conn.recv(1024)
         self.conn.sendall(header)
         payload_size = int(header.decode('utf-8'))
 
-        # 5. client stores json dump, sends res - sendall()
+        # client stores json dump, sends res - sendall()
         data = self.conn.recv(payload_size)
         self.conn.sendall(data)
 

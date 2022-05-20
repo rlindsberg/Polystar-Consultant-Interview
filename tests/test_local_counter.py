@@ -64,6 +64,11 @@ class TestLocalCounter(unittest.TestCase):
             self.assertEqual(word_frequency_dict['texta'], 2)
 
     def test_count_word_in_two_novels(self):
+        """
+        Given path to the directory containing the novels,
+        When count_word_frequencies_in_directory(),
+        Then output is not None and top 5 occurrence > 0.
+        """
         data_path = '/Users/karlemstrand/Documents/git/HiQ/data/novels'
         base_counter = BaseCounter(data_path=data_path)
 

@@ -1,8 +1,7 @@
 import argparse
-import json
-import socket
 from collections import Counter
 import re
+import socket
 from typing import Dict
 
 from controller import Controller
@@ -48,7 +47,6 @@ def start(port):
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--port', default=50000, type=int, help='The socket port')
     args = parser.parse_args()

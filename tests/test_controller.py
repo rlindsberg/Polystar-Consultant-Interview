@@ -26,7 +26,7 @@ class TestController(unittest.TestCase):
             text = 'A message of 21 bytes'
             msg = Message(text, client)
 
-            ok, res = client.send_header(msg._header)
+            ok, res = client._send_header(msg._header)
 
             self.assertTrue(ok)
             self.assertIsNotNone(res)
