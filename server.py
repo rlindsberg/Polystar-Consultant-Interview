@@ -27,7 +27,7 @@ def start(port):
             data_received = controller.conn.recv(1024)
             # while socket is open
             while data_received != b'':
-                print(f'2. I got {data_received}')
+                # print(f'2. I got {data_received}')
                 payload_size = int(data_received.decode('utf-8'))
 
                 controller.conn.sendall(data_received)

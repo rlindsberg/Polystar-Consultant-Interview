@@ -14,13 +14,13 @@ class TestController(unittest.TestCase):
         When send_header() to an echoing server,
         Then received message matches the original message.
         """
-        echo_server = EchoBaseServer('127.0.0.1', 50001)
+        echo_server = EchoBaseServer('127.0.0.1', 50008)
         t1 = Thread(target=echo_server.start)
         t1.start()
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.settimeout(1)
-            s.connect(('127.0.0.1', 50001))
+            s.connect(('127.0.0.1', 50008))
 
             client = Controller(s)
             text = 'A message of 21 bytes'
@@ -65,7 +65,7 @@ class TestController(unittest.TestCase):
         file_path = '/Users/karlemstrand/Documents/git/HiQ/data/test_count_multiple_files/poly_line.txt'
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect(('star.karlemstrand.com', 50001))
+            s.connect(('star.karlemstrand.com', 50009))
             client = Controller(s)
 
             word_frequency_dict = {}
